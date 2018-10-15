@@ -1,0 +1,28 @@
+resource "aws_security_group" "postgres_sg" {
+  name        = "postgres_sg"
+  description = "Allow all ingress traffic through 5432"
+  vpc_id      = "default"
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_db_instance" "postgres" {
+   name = "postgres"
+   description = "Creating postgres database"
+   user = "master"
+   password = "password"
+   engine = "postgres"
+   engine_version = "9.3.10"
+   instance_class = "db.t2.micro"
+   storage_type = "SSD"
+   license_model = "postgresql-license"
+   allocated_storage = 10
+   vpc_security_group_ids = ["${aws_security_group.postgres_sg.id}"]
+   tags {
+    Name = "postgres_db_naresh"
+  }
+}

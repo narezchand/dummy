@@ -1,0 +1,5 @@
+{
+    "CustomerId": {"N": "1"},
+    "Account_number": {"N": "123456"},
+    "City": {"S": "Chennai"}
+}
